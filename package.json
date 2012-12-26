@@ -1,0 +1,17 @@
+{
+    "name": "fcompose" 
+  , "version": "0.1.0"
+  , "description": "A file composer"
+  , "url": "https://github.com/yuanchuan/fcompose"
+  , "author": "yuanchuan <yuanchuan23@gmail.com> (http://yuanchuan.name)"
+  , "main": "./index.js"
+  , "keywords": ["file", "compose", "packer"]
+  , "dependencies": {
+        "mkdirp": "~0.3.4" 
+    }
+  , "repository": {
+        "type": "git"
+      , "url": "git://github.com/yuanchuan/fcompose.git"
+    }
+}
+
