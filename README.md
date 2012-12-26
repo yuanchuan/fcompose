@@ -3,6 +3,9 @@ Utility to compose one or multiple files into one or mulitple places.
 
 It's quite useful to be used as part of some build scripts.
 
+### Installation
+
+    npm install fcompose
 
 ### Example
 
