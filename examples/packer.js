@@ -3,13 +3,17 @@ var compose = require('../')
 compose({
     input:  ['packer.js', 'multi.js']
   , output: 'result/packer_all.js'
-  , processor: function(content, next) {
+  , processor: function(buffer, next) {
       next(
-        content
-          .replace(/^\s*/g, '')
-          .replace(/\n*/g, '')
-          .replace(/\s*([\=\.\(\)\:\{\}\,])\s*/g, '$1')
-      )
+        minify(buffer.toString())
+      ) 
     }
 });
 
+
+function minify(input) {
+  return input
+    .replace(/^\s*/g, '')
+    .replace(/\n*/g, '')
+    .replace(/\s*([\=\.\(\)\:\{\}\,])\s*/g, '$1');
+}

@@ -3,10 +3,11 @@ var compose = require('../');
 compose({
     input: 'multi.js'
   , output: ['result/mma.js', 'result/mmb.js']
-  , processor: function(content, next) {
+  , processor: function(buffer, next) {
+      var content = buffer.toString();
       next(
-        content, 
-        '\n\n---------------------------\n\n',
+        content,
+        '\n\n/*---------------------------*/\n\n',
         content
       )
     }
