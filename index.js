@@ -18,8 +18,8 @@ var fs      = require('fs')
  *   compose({
  *     input: ['a.txt', 'b.txt'],
  *     output: 'result.txt'
- *     processor: function(content, next) {
- *       next( content.length );
+ *     processor: function(buffer, next) {
+ *       next( buffer.toString().length );
  *     },
  *     done: function(stamp) {
  *       console.log(stamp);
@@ -30,6 +30,13 @@ var fs      = require('fs')
  * @api public
  */
 module.exports = function(config) {
+  if (Object(config) !== config) {
+    config = {
+        input: arguments[0]  
+      , output: arguments[1]
+      , processor: arguments[2]
+    }
+  }
 
   var input = makeArray(config.input)
     , streams = makeWriteStreams(config.output)
@@ -43,10 +50,10 @@ module.exports = function(config) {
     chain.next(); 
   }
 
-  var processor = function(err, content) {
+  var processor = function(err, buffer) {
     if (err) throw err;
     if (config.processor) {
-      config.processor(content, next);
+      config.processor(buffer, next);
     } else {
       next(content);
     }
@@ -56,7 +63,7 @@ module.exports = function(config) {
     .add(
       input.map(function(n) {
         return function() {
-          fs.readFile(n, 'utf-8', processor)
+          fs.readFile(n, processor)
         };
       })
     )

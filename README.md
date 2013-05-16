@@ -1,28 +1,42 @@
 #fcompose 
-Utility to compose one or multiple files into one or mulitple places.
+>Compose one or multiple files into one or mulitple places.
 
-It's quite useful to be used as part of some build scripts.
+## Installation
 
-### Installation
+```bash
+$ npm install fcompose
+```
 
-    npm install fcompose
+## Example
 
-### Example
+fcompose as a pipe
 
-    var compose = require('compose')
+```javascript
+compose('origin.txt', 'output.txt', function(buffer, next) {
+  next(             
+    buffer.toString().toUpperCase()
+  );
+});
+```     
 
-    compose({
-        input:  ['a.js' , 'b.js' , 'c.js']
-      , output: [
-            'path/to/abc_min_1.js'
-          , 'path/to/abc_min_2.js'   
-        ]
-      , processor: function(content, next) {
-          next(
-            content
-              .replace(/^\s*/g, '')
-              .replace(/\n*/g, '')
-              .replace(/\s*([\=\.\(\)\:\{\}\,])\s*/g, '$1')
-          )
-        }
-    }); 
+Compose and minimize 3 js files to 2 places 
+
+```javascript
+var compose = require('fcompose')
+
+compose({
+    input:  ['a.js' , 'b.js' , 'c.js']
+  , output: [ 'path/to/abc.js' , 'path/to/abc2.js']
+  , processor: function(buffer, next) {
+      next(
+        buffer.toString()
+          .replace(/^\s*/g, '')
+          .replace(/\n*/g, '')
+          .replace(/\s*([\=\.\(\)\:\{\}\,])\s*/g, '$1')
+      )
+    }
+}); 
+```
+
+## License
+MIT
