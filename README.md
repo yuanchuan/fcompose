@@ -9,9 +9,11 @@ $ npm install fcompose
 
 ## Example
 
-fcompose as a pipe
+Compose single file as a pipe.
 
 ```javascript
+var compose = require('fcompose');
+
 compose('origin.txt', 'output.txt', function(buffer, next) {
   next(             
     buffer.toString().toUpperCase()
@@ -19,23 +21,29 @@ compose('origin.txt', 'output.txt', function(buffer, next) {
 });
 ```     
 
-Compose and minimize 3 js files to 2 places 
+Compose multiple files as a packer.
 
 ```javascript
 var compose = require('fcompose')
 
 compose({
     input:  ['a.js' , 'b.js' , 'c.js']
-  , output: [ 'path/to/abc.js' , 'path/to/abc2.js']
+  , output: ['path/to/abc.js', 'path/to/abc2.js']
   , processor: function(buffer, next) {
-      next(
-        buffer.toString()
-          .replace(/^\s*/g, '')
-          .replace(/\n*/g, '')
-          .replace(/\s*([\=\.\(\)\:\{\}\,])\s*/g, '$1')
-      )
+      next(minify(buffer.toString())
+    },
+  , done: function(stamp) {
+      console.log(stamp);
     }
 }); 
+
+// Quick and dirty way to strip white spaces.
+function minify(input) {
+  return input
+    .replace(/^\s*/g, '')
+    .replace(/\n*/g, '')
+    .replace(/\s*([\=\.\(\)\:\{\}\,])\s*/g, '$1') 
+}
 ```
 
 ## License
