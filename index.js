@@ -1,3 +1,4 @@
+
 var fs      = require('fs')
   , mkdirp  = require('mkdirp')
   , dirname = require('path').dirname;
@@ -11,7 +12,7 @@ var fs      = require('fs')
  *  - `input`:     input file paths {String|Array}
  *  - `output`:    ouput file paths {String|Array}
  *  - `processor`: specify the way to process each input files [Function]
- *  - `done`:      done the progress [Function]
+ *  - `done`:      callback function after the progress is done [Function]
  *  
  * Example:
  *  
@@ -30,12 +31,13 @@ var fs      = require('fs')
  * @api public
  */
 module.exports = function(config) {
+
   if (Object(config) !== config) {
-    config = {
-        input: arguments[0]  
-      , output: arguments[1]
-      , processor: arguments[2]
-    }
+    var args = [].slice.call(arguments);
+    config = {};
+    ['input', 'output', 'processor', 'done'].forEach(function(conf, i) {
+      config[conf] = args[i];
+    });
   }
 
   var input = makeArray(config.input)

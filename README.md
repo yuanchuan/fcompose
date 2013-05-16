@@ -9,7 +9,7 @@ $ npm install fcompose
 
 ## Example
 
-Compose single file as a pipe.
+**fcompose as a pipeline**
 
 ```javascript
 var compose = require('fcompose');
@@ -21,7 +21,7 @@ compose('origin.txt', 'output.txt', function(buffer, next) {
 });
 ```     
 
-Compose multiple files as a packer.
+**fcompose as a packer**
 
 ```javascript
 var compose = require('fcompose')
